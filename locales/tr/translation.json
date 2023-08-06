@@ -1,0 +1,6 @@
+{
+    "user_create_success": "Kullanıcı oluşturuldu",
+    "unauthorized": "İzinsiz Erişim",
+    "not-valid-email": "Geçerli bir e-posta adresi değil",
+    "pw-at-least-characters": "Dein Passwort muss aus mindestens 9 Zeichen bestehen"
+}

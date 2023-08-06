@@ -1,0 +1,63 @@
+# import Post from "./post.graphql"
+# import Comment from "./comment.graphql"
+# import Report from "./report.graphql"
+
+type Query {
+    user(id: ID!): User!
+    users: [User!]
+}
+
+type User {
+    id: ID!
+    email: String!
+    posts: [Post]
+    comments: [Comment]
+    reports: [Report]
+    is_deleted: Boolean
+    is_banned: Boolean
+    last_update_from_user_id: ID
+}
+
+type Mutation{
+    signUpUser(data: CreateUserInput!): AuthUser!
+    signInUser(data: SignInUserInput!): AuthUser!
+    updateUser(data: UpdateUserInput): AuthUser!
+    updateUserPassword(data: updatePasswordInput!): AuthUser!
+    deleteUser(id: ID!, is_deleted: Boolean): User!
+    deleteUserFromDb(id: ID! ): String!
+}
+
+input CreateUserInput{
+    email: String!
+    password: String!
+}
+
+input UpdateUserInput{
+    email: String
+    posts: [ID]
+    comments: [ID]
+    reports: [ID]
+    is_deleted: Boolean
+    is_banned: Boolean
+    last_update_from_user_id: ID,
+}
+
+input updatePasswordInput {
+    password: String!
+}
+
+input SignInUserInput {
+    email: String!,
+    password: String!
+}
+
+type AuthUser {
+    user: User
+    token: String!
+    refreshToken: String!
+}
+
+
+type Subscription {
+    user: User!
+}

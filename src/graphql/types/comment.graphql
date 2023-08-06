@@ -1,0 +1,46 @@
+# import User from "./user.graphql"
+# import Post from "./post.graphql"
+# import Report from "./report.graphql"
+
+type Query {
+    comment(id: ID!): Comment!
+    comments: [Comment!]
+}
+
+type Comment {
+  id: ID!
+  text: String
+  media: [String]
+  user: User!
+  post: Post!
+  is_active: Boolean
+  is_deleted: Boolean
+  created_at: String
+  last_update_from_user_id: ID
+}
+
+type Mutation{
+    createComment(data: CreateCommentInput!): Comment!
+    updateComment(id: ID, data: UpdateCommentInput!):Comment
+    deleteCommentFromDb(id: ID!):Comment!
+}
+
+input CreateCommentInput{
+  text: String
+  media: [String]
+  post: ID
+  last_update_from_user_id: ID
+}
+
+input UpdateCommentInput{
+  text: String!
+  media: [String]
+  post: ID
+  is_active: Boolean
+  is_deleted: Boolean
+}
+
+
+type Subscription {
+    comment(user_id: ID): Comment!
+}

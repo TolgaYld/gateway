@@ -1,0 +1,63 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tolga Yildirim <tolgayld1990@gmail.com>",
+  "scripts": {
+    "start": "NODE_ENV=production node ./index.js",
+    "test": "NODE_ENV=test nodemon ./index.js",
+    "lint": "eslint ./src/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^8.0.0",
+    "@graphql-tools/load": "^8.0.0",
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "graphql": "^16.7.1",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-tools": "^9.0.0",
+    "i18next": "^23.4.2",
+    "i18next-fs-backend": "^2.1.5",
+    "i18next-http-middleware": "^3.3.2",
+    "jsonwebtoken": "^9.0.1",
+    "luxon": "^3.3.0",
+    "mercurius": "^13.1.0",
+    "mongoose": "^7.4.2",
+    "validator": "^13.11.0",
+    "winston": "^3.10.0",
+    "winston-mongodb": "^5.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.1"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "env": {
+      "node": true,
+      "es6": true,
+      "mocha": true
+    },
+    "rules": {
+      "prettier/prettier": "warn",
+      "no-unused-vars": "off"
+    }
+  },
+  "prettier": {
+    "singleQuote": false
+  }
+}

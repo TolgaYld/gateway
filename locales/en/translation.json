@@ -1,0 +1,6 @@
+{
+    "user_create_success": "User is created",
+    "unauthorized": "Unauthorized access",
+    "not-valid-email": "Not a valid e-mail",
+    "pw-at-least-characters": "Your password must consist of at least 9 characters"
+}
