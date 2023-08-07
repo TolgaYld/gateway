@@ -13,12 +13,12 @@ const Query = {
     } else {
       try {
         const response = await axios.get(
-          process.env.AUTHSERVICE + "/find/" + id,
+          process.env.AUTHSERVICE + "/find/" + args.id,
           {
             type: "FindUser",
           },
         );
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -40,7 +40,7 @@ const Query = {
         const response = await axios.get(process.env.AUTHSERVICE + "/findAll", {
           type: "FindAllUsers",
         });
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -67,7 +67,7 @@ const Query = {
             type: "FindPost",
           },
         );
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -89,7 +89,7 @@ const Query = {
         const response = await axios.get(process.env.POSTSERVICE + "/findAll", {
           type: "FindAllPosts",
         });
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -116,7 +116,7 @@ const Query = {
             type: "FindComment",
           },
         );
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -141,7 +141,7 @@ const Query = {
             type: "FindAllComments",
           },
         );
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -168,7 +168,7 @@ const Query = {
             type: "FindReport",
           },
         );
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
@@ -193,7 +193,7 @@ const Query = {
             type: "FindAllReports",
           },
         );
-        if (response.status < 400 && response.data.successfully) {
+        if (response.status < 400 && response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);

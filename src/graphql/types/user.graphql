@@ -30,20 +30,21 @@ type Mutation{
 input CreateUserInput{
     email: String!
     password: String!
+    repeat_password: String!
 }
 
 input UpdateUserInput{
     email: String
-    posts: [ID]
-    comments: [ID]
-    reports: [ID]
     is_deleted: Boolean
     is_banned: Boolean
+    email_confirmed: Boolean
+    is_admin: Boolean
     last_update_from_user_id: ID,
 }
 
 input updatePasswordInput {
     password: String!
+    repeat_password: String!
 }
 
 input SignInUserInput {

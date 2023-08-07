@@ -2,5 +2,6 @@
     "user_create_success": "Ihr Benutzerkonto wurde erstellt",
     "unauthorized": "Unautorisierter Zugriff",
     "not-valid-email": "Keine gültige E-Mail-Adresse",
-    "pw-at-least-characters": "Dein Passwort muss aus mindestens 9 Zeichen bestehen"
+    "pw-at-least-characters": "Dein Passwort muss aus mindestens 9 Zeichen bestehen",
+    "pw-not-match": "Passwörter stimmen nicht überein"
 }

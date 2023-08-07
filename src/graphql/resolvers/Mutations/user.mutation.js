@@ -4,26 +4,24 @@ const createError = require("http-errors");
 const axios = require("axios");
 const errorHandler = require("../../../errors/errorHandler");
 
-const tokenDuration = "3h";
-const refreshTokenDuration = "30d";
+const validatePasswordOptions = {
+  minLength: 6,
+  minLowercase: 0,
+  minUppercase: 0,
+  minNumbers: 0,
+  minSymbols: 0,
+  returnScore: false,
+  pointsPerUnique: 0,
+  pointsPerRepeat: 0,
+  pointsForContainingLower: 0,
+  pointsForContainingUpper: 0,
+  pointsForContainingNumber: 0,
+  pointsForContainingSymbol: 0,
+};
 
 module.exports = {
   signUpUser: async (parent, args, { pubsub, req }) => {
     const isEmail = validator.isEmail(args.data.email);
-    const validatePasswordOptions = {
-      minLength: 6,
-      minLowercase: 0,
-      minUppercase: 0,
-      minNumbers: 0,
-      minSymbols: 0,
-      returnScore: false,
-      pointsPerUnique: 0,
-      pointsPerRepeat: 0,
-      pointsForContainingLower: 0,
-      pointsForContainingUpper: 0,
-      pointsForContainingNumber: 0,
-      pointsForContainingSymbol: 0,
-    };
 
     const isStrongPassword = validator.isStrongPassword(
       args.data.password,
@@ -38,23 +36,32 @@ module.exports = {
         throw Error(createError(406, req.t("pw-at-least-character")));
       }
     } else {
-      try {
-        const response = await axios.post(process.env.AUTHSERVICE + "/create", {
-          type: "signUpUser",
-          data: {
-            ...args.data,
-          },
-        });
+      if (args.data.password !== args.data.repeat_password) {
+        throw Error(createError(406, req.t("pw-not-match")));
+      } else {
+        try {
+          const response = await axios.post(
+            process.env.AUTHSERVICE + "/create",
+            {
+              type: "signUpUser",
+              data: {
+                ...args.data,
+                email_confirmed: false,
+                is_admin: false,
+              },
+            },
+          );
 
-        if (response.data.success) {
-          return response.data.data;
-        } else {
-          errorHandler(response.status, response.data.msg);
-          throw Error(createError(response.status, response.data.msg));
+          if (response.data.success) {
+            return response.data.data;
+          } else {
+            errorHandler(response.status, response.data.msg);
+            throw Error(createError(response.status, response.data.msg));
+          }
+        } catch (error) {
+          errorHandler(400, error);
+          throw Error(400, error);
         }
-      } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
       }
     }
   },
@@ -176,27 +183,39 @@ module.exports = {
   },
   updateUserPassword: async (parent, args, { req }) => {
     const id = await getUserId(req);
+    const isStrongPassword = validator.isStrongPassword(
+      args.data.password,
+      validatePasswordOptions,
+    );
 
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
       try {
-        const response = await axios.patch(
-          process.env.AUTHSERVICE + "/updatePassword/" + id,
-          {
-            type: "updatePassword",
-            data: {
-              ...args.data,
-              last_update_from_user_id: id,
-            },
-          },
-        );
-
-        if (response.data.success) {
-          return response.data.data;
+        if (!isStrongPassword) {
+          throw Error(createError(406, req.t("pw-at-least-character")));
         } else {
-          errorHandler(response.status, response.data.msg);
-          throw Error(createError(response.status, response.data.msg));
+          if (args.data.password !== args.data.repeat_password) {
+            throw Error(createError(406, req.t("pw-not-match")));
+          } else {
+            const response = await axios.patch(
+              process.env.AUTHSERVICE + "/updatePassword/" + id,
+              {
+                type: "updatePassword",
+                data: {
+                  password: args.data.password,
+                  last_update_from_user_id: id,
+                },
+              },
+            );
+
+            if (response.data.success) {
+              return response.data.data;
+            } else {
+              errorHandler(response.status, response.data.msg);
+              throw Error(createError(response.status, response.data.msg));
+            }
+          }
         }
       } catch (error) {
         errorHandler(400, error);

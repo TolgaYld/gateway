@@ -11,7 +11,7 @@ const Report = {
           type: "FindUser",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
@@ -31,7 +31,7 @@ const Report = {
           type: "FindUser",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
@@ -51,7 +51,7 @@ const Report = {
           type: "FindPost",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
@@ -70,7 +70,7 @@ const Report = {
           type: "FindComment",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);

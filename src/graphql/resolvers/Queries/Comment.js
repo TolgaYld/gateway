@@ -11,7 +11,7 @@ const Comment = {
           type: "FindUser",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
@@ -31,7 +31,7 @@ const Comment = {
           type: "FindPost",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);

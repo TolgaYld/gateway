@@ -11,7 +11,7 @@ const User = {
           type: "FindAllPostsFromUser",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
@@ -31,7 +31,7 @@ const User = {
           type: "FindAllCommentsFromUser",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
@@ -51,7 +51,7 @@ const User = {
           type: "FindAllReportsFromUser",
         },
       );
-      if (response.status < 400 && response.data.successfully) {
+      if (response.status < 400 && response.data.success) {
         return response.data.data;
       } else {
         errorHandler(response.status, response.data.msg);
