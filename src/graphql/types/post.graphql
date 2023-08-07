@@ -28,7 +28,6 @@ type Mutation{
 input CreatePostInput{
   text: String
   media: [String]
-  last_update_from_user_id: ID
 }
 
 input UpdatePostInput{
