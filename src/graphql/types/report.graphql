@@ -8,7 +8,7 @@ type Query {
 }
 
 type Report {
-  id: ID!,
+  _id: ID!,
   reason: String!
   reported_by_user: User! 
   reported_user: User!

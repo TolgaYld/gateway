@@ -8,7 +8,7 @@ type Query {
 }
 
 type Comment {
-  id: ID!
+  _id: ID!
   text: String
   media: [String]
   user: User!
