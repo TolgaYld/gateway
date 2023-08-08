@@ -1,5 +1,4 @@
 const getUserId = require("../../utils/getId");
-const validator = require("validator");
 const createError = require("http-errors");
 const axios = require("axios");
 const errorHandler = require("../../../errors/errorHandler");
@@ -21,76 +20,47 @@ const validatePasswordOptions = {
 
 module.exports = {
   signUpUser: async (parent, args, { pubsub, req }) => {
-    const isEmail = validator.isEmail(args.data.email);
+    try {
+      const response = await axios.post(process.env.AUTHSERVICE + "/create", {
+        type: "signUpUser",
+        data: {
+          ...args.data,
+          email_confirmed: false,
+          is_admin: false,
+        },
+      });
 
-    const isStrongPassword = validator.isStrongPassword(
-      args.data.password,
-      validatePasswordOptions,
-    );
-
-    if (!isEmail || !isStrongPassword) {
-      if (!isEmail) {
-        throw Error(createError(406, req.t("not-valid-email")));
-      }
-      if (!isStrongPassword) {
-        throw Error(createError(406, req.t("pw-at-least-character")));
-      }
-    } else {
-      if (args.data.password !== args.data.repeat_password) {
-        throw Error(createError(406, req.t("pw-not-match")));
+      if (response.data.success) {
+        return response.data.data;
       } else {
-        try {
-          const response = await axios.post(
-            process.env.AUTHSERVICE + "/create",
-            {
-              type: "signUpUser",
-              data: {
-                ...args.data,
-                email_confirmed: false,
-                is_admin: false,
-              },
-            },
-          );
-
-          if (response.data.success) {
-            return response.data.data;
-          } else {
-            errorHandler(response.status, response.data.msg);
-            throw Error(createError(response.status, response.data.msg));
-          }
-        } catch (error) {
-          errorHandler(400, error);
-          throw Error(400, error);
-        }
+        errorHandler(response.status, response.data.msg);
+        throw Error(createError(response.status, response.data.msg));
       }
+    } catch (error) {
+      errorHandler(400, error);
+      throw Error(400, error);
     }
   },
 
   signInUser: async (parent, { data: { email, password } }, { req }) => {
-    const isEmail = validator.isEmail(email);
+    try {
+      const response = await axios.post(process.env.AUTHSERVICE + "/signIn", {
+        type: "signInUser",
+        data: {
+          email,
+          password,
+        },
+      });
 
-    if (!isEmail) {
-      throw Error(createError(406, req.t("not-valid-email")));
-    } else {
-      try {
-        const response = await axios.post(process.env.AUTHSERVICE + "/signIn", {
-          type: "signInUser",
-          data: {
-            email,
-            password,
-          },
-        });
-
-        if (response.data.success) {
-          return response.data.data;
-        } else {
-          errorHandler(response.status, response.data.msg);
-          throw Error(createError(response.status, response.data.msg));
-        }
-      } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+      if (response.data.success) {
+        return response.data.data;
+      } else {
+        errorHandler(response.status, response.data.msg);
+        throw Error(createError(response.status, response.data.msg));
       }
+    } catch (error) {
+      errorHandler(400, error);
+      throw Error(400, error);
     }
   },
 
@@ -183,39 +153,27 @@ module.exports = {
   },
   updateUserPassword: async (parent, args, { req }) => {
     const id = await getUserId(req);
-    const isStrongPassword = validator.isStrongPassword(
-      args.data.password,
-      validatePasswordOptions,
-    );
 
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
       try {
-        if (!isStrongPassword) {
-          throw Error(createError(406, req.t("pw-at-least-character")));
-        } else {
-          if (args.data.password !== args.data.repeat_password) {
-            throw Error(createError(406, req.t("pw-not-match")));
-          } else {
-            const response = await axios.patch(
-              process.env.AUTHSERVICE + "/updatePassword/" + id,
-              {
-                type: "updatePassword",
-                data: {
-                  password: args.data.password,
-                  last_update_from_user_id: id,
-                },
-              },
-            );
+        const response = await axios.patch(
+          process.env.AUTHSERVICE + "/updatePassword/" + id,
+          {
+            type: "updatePassword",
+            data: {
+              password: args.data.password,
+              last_update_from_user_id: id,
+            },
+          },
+        );
 
-            if (response.data.success) {
-              return response.data.data;
-            } else {
-              errorHandler(response.status, response.data.msg);
-              throw Error(createError(response.status, response.data.msg));
-            }
-          }
+        if (response.data.success) {
+          return response.data.data;
+        } else {
+          errorHandler(response.status, response.data.msg);
+          throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
         errorHandler(400, error);
