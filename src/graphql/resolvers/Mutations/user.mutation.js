@@ -80,6 +80,7 @@ module.exports = {
               isDeleted: args.isDeleted,
               last_update_from_user_id: id,
             },
+            headers,
           },
         );
 
@@ -109,6 +110,7 @@ module.exports = {
           {
             type: "DeleteUserFromDb",
           },
+          headers,
         );
 
         if (response.data.success) {
@@ -140,6 +142,7 @@ module.exports = {
               ...args.data,
               last_update_from_user_id: id,
             },
+            headers,
           },
         );
 
@@ -172,6 +175,7 @@ module.exports = {
               password: args.data.password,
               last_update_from_user_id: id,
             },
+            headers,
           },
         );
 
