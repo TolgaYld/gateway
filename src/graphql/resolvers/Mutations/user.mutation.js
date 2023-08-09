@@ -70,6 +70,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.patch(
           process.env.AUTHSERVICE + "/update/" + args.id,
@@ -101,6 +102,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.delete(
           process.env.AUTHSERVICE + "/delete/" + args.id,
@@ -121,12 +123,14 @@ module.exports = {
       }
     }
   },
+
   updateUser: async (parent, args, { req }) => {
     const id = await getUserId(req);
 
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.patch(
           process.env.AUTHSERVICE + "/update/" + id,
@@ -151,12 +155,14 @@ module.exports = {
       }
     }
   },
+
   updateUserPassword: async (parent, args, { req }) => {
     const id = await getUserId(req);
 
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.patch(
           process.env.AUTHSERVICE + "/updatePassword/" + id,

@@ -10,6 +10,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.post(
           process.env.REPORTSERVICE + "/create",
@@ -18,6 +19,7 @@ module.exports = {
             data: {
               ...args.data,
             },
+            headers,
           },
         );
 

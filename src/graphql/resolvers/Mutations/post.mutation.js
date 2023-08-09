@@ -10,12 +10,14 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.post(process.env.POSTSERVICE + "/create", {
           type: "CreatePost",
           data: {
             ...args.data,
           },
+          headers,
         });
 
         if (response.data.success) {
@@ -37,6 +39,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.patch(
           process.env.POSTSERVICE + "/update/" + args.id,
@@ -46,6 +49,7 @@ module.exports = {
               ...args.data,
               last_update_from_user_id: id,
             },
+            headers,
           },
         );
 
@@ -61,18 +65,21 @@ module.exports = {
       }
     }
   },
+
   deletePostFromDb: async (parent, args, { req }) => {
     const id = await getUserId(req);
 
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.delete(
           process.env.POSTSERVICE + "/delete/" + args.id,
           {
             type: "DeletePostFromDb",
           },
+          headers,
         );
 
         if (response.data.success) {

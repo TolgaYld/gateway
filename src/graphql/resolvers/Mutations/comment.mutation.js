@@ -10,6 +10,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.post(
           process.env.COMMENTSERVICE + "/create",
@@ -18,6 +19,7 @@ module.exports = {
             data: {
               ...args.data,
             },
+            headers,
           },
         );
 
@@ -40,6 +42,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.patch(
           process.env.COMMENTSERVICE + "/update/" + args.id,
@@ -49,6 +52,7 @@ module.exports = {
               ...args.data,
               last_update_from_user_id: id,
             },
+            headers,
           },
         );
 
@@ -64,18 +68,21 @@ module.exports = {
       }
     }
   },
+
   deleteCommentFromDb: async (parent, args, { req }) => {
     const id = await getUserId(req);
 
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.delete(
           process.env.COMMENTSERVICE + "/delete/" + args.id,
           {
             type: "DeleteCommentFromDb",
           },
+          headers,
         );
 
         if (response.data.success) {
