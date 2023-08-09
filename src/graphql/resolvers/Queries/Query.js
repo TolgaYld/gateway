@@ -11,11 +11,13 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(
           process.env.AUTHSERVICE + "/find/" + args.id,
           {
             type: "FindUser",
+            headers,
           },
         );
         if (response.status < 400 && response.data.success) {
@@ -36,9 +38,11 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(process.env.AUTHSERVICE + "/findAll", {
           type: "FindAllUsers",
+          headers,
         });
         if (response.status < 400 && response.data.success) {
           return response.data.data;
@@ -60,11 +64,13 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(
           process.env.POSTSERVICE + "/find/" + args.id,
           {
             type: "FindPost",
+            headers,
           },
         );
         if (response.status < 400 && response.data.success) {
@@ -85,9 +91,11 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(process.env.POSTSERVICE + "/findAll", {
           type: "FindAllPosts",
+          headers,
         });
         if (response.status < 400 && response.data.success) {
           return response.data.data;
@@ -109,11 +117,13 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(
           process.env.COMMENTSERVICE + "/find/" + args.id,
           {
             type: "FindComment",
+            headers,
           },
         );
         if (response.status < 400 && response.data.success) {
@@ -134,11 +144,13 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(
           process.env.COMMENTSERVICE + "/findAll",
           {
             type: "FindAllComments",
+            headers,
           },
         );
         if (response.status < 400 && response.data.success) {
@@ -161,11 +173,13 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(
           process.env.REPORTSERVICE + "/find/" + args.id,
           {
             type: "FindReport",
+            headers,
           },
         );
         if (response.status < 400 && response.data.success) {
@@ -186,11 +200,13 @@ const Query = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.get(
           process.env.REPORTSERVICE + "/findAll",
           {
             type: "FindAllReports",
+            headers,
           },
         );
         if (response.status < 400 && response.data.success) {
