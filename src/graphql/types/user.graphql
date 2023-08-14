@@ -23,7 +23,7 @@ type Mutation{
     signInUser(data: SignInUserInput!): AuthUser!
     updateUser(data: UpdateUserInput): AuthUser!
     updateUserPassword(data: updatePasswordInput!): AuthUser!
-    deleteUser(id: ID!, is_deleted: Boolean): User!
+    deleteUser(id: ID!): User!
     deleteUserFromDb(id: ID! ): String!
 }
 

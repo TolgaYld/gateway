@@ -37,8 +37,8 @@ module.exports = {
         throw Error(createError(response.status, response.data.msg));
       }
     } catch (error) {
-      errorHandler(400, error);
-      throw Error(400, error);
+      errorHandler(error.response.status, error.response.data.msg);
+      throw Error(error.response.data.msg);
     }
   },
 
@@ -59,8 +59,8 @@ module.exports = {
         throw Error(createError(response.status, response.data.msg));
       }
     } catch (error) {
-      errorHandler(400, error);
-      throw Error(400, error);
+      errorHandler(error.response.status, error.response.data.msg);
+      throw Error(error.response.data.msg);
     }
   },
 
@@ -77,11 +77,11 @@ module.exports = {
           {
             type: "updateUser",
             data: {
-              isDeleted: args.isDeleted,
+              is_deleted: true,
               last_update_from_user_id: id,
             },
-            headers,
           },
+          { headers },
         );
 
         if (response.data.success) {
@@ -91,8 +91,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -109,8 +109,8 @@ module.exports = {
           process.env.AUTHSERVICE + "/delete/" + args.id,
           {
             type: "DeleteUserFromDb",
+            headers,
           },
-          headers,
         );
 
         if (response.data.success) {
@@ -120,8 +120,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -142,8 +142,8 @@ module.exports = {
               ...args.data,
               last_update_from_user_id: id,
             },
-            headers,
           },
+          { headers },
         );
 
         if (response.data.success) {
@@ -153,8 +153,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -175,8 +175,8 @@ module.exports = {
               password: args.data.password,
               last_update_from_user_id: id,
             },
-            headers,
           },
+          { headers },
         );
 
         if (response.data.success) {
@@ -186,8 +186,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },

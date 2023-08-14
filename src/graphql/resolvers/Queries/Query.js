@@ -27,8 +27,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -51,8 +51,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -80,8 +80,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -104,8 +104,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -133,8 +133,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -160,8 +160,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -189,8 +189,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -216,8 +216,8 @@ const Query = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },

@@ -19,8 +19,8 @@ module.exports = {
             data: {
               ...args.data,
             },
-            headers,
           },
+          { headers },
         );
 
         if (response.data.success) {
@@ -30,8 +30,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -41,6 +41,7 @@ module.exports = {
     if (id == null) {
       throw Error(createError(401, req.t("unauthorized")));
     } else {
+      const headers = { Authorization: id };
       try {
         const response = await axios.patch(
           process.env.REPORTSERVICE + "/update/" + args.id,
@@ -51,6 +52,7 @@ module.exports = {
               last_update_from_user_id: id,
             },
           },
+          { headers },
         );
 
         if (response.data.success) {
@@ -60,8 +62,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },

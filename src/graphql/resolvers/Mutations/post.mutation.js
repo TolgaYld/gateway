@@ -2,6 +2,7 @@ const getUserId = require("../../utils/getId");
 const createError = require("http-errors");
 const axios = require("axios");
 const errorHandler = require("../../../errors/errorHandler");
+const { log } = require("../../../modules/logModule");
 
 module.exports = {
   createPost: async (parent, args, { req }) => {
@@ -12,23 +13,26 @@ module.exports = {
     } else {
       const headers = { Authorization: id };
       try {
-        const response = await axios.post(process.env.POSTSERVICE + "/create", {
-          type: "CreatePost",
-          data: {
-            ...args.data,
+        const response = await axios.post(
+          process.env.POSTSERVICE + "/create",
+          {
+            type: "CreatePost",
+            data: {
+              ...args.data,
+            },
           },
-          headers,
-        });
+          { headers },
+        );
 
         if (response.data.success) {
           return response.data.data;
         } else {
           errorHandler(response.status, response.data.msg);
-          throw Error(createError(response.status, response.data.msg));
+          throw Error(response.data.msg);
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -49,8 +53,8 @@ module.exports = {
               ...args.data,
               last_update_from_user_id: id,
             },
-            headers,
           },
+          { headers },
         );
 
         if (response.data.success) {
@@ -60,8 +64,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },
@@ -79,7 +83,7 @@ module.exports = {
           {
             type: "DeletePostFromDb",
           },
-          headers,
+          { headers },
         );
 
         if (response.data.success) {
@@ -89,8 +93,8 @@ module.exports = {
           throw Error(createError(response.status, response.data.msg));
         }
       } catch (error) {
-        errorHandler(400, error);
-        throw Error(400, error);
+        errorHandler(error.response.status, error.response.data.msg);
+        throw Error(error.response.data.msg);
       }
     }
   },

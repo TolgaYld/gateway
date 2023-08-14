@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 const Fastify = require("fastify");
 const mercurius = require("mercurius");
 const path = require("path");
@@ -20,9 +20,11 @@ i18next
   .use(Backend)
   .use(i18nextMiddleware.LanguageDetector)
   .init({
+    debug: process.env.NODE_ENV !== "production",
     fallbackLng: "en",
     backend: {
-      loadPath: "../locales/{{lng}}/translation.json",
+      loadPath:
+        path.join(__dirname, "..") + "/locales/{{lng}}/translation.json",
     },
   });
 
@@ -42,10 +44,9 @@ server.register(mercurius, {
   schema: schemaWithResolvers,
   graphiql: true,
   subscription: true,
-  context: ({ req, res }) => ({
-    req,
-    res,
-  }),
+  context: async (req) => {
+    return { req };
+  },
 });
 
 server.register(i18nextMiddleware.plugin, { i18next });
