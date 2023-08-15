@@ -28,11 +28,14 @@ const Comment = {
   },
 
   post: async (parent, args, { req }) => {
+    const id = await getUserId(req);
     try {
+      const headers = { Authorization: id };
       const response = await axios.get(
         process.env.POSTSERVICE + "/find/" + parent.post._id,
         {
           type: "FindPost",
+          headers,
         },
       );
       if (response.status < 400 && response.data.success) {
